@@ -2,8 +2,10 @@
 
 const express = require('express');
 const router = express.Router();
-const User = require('./models').User;
-const Course = require('./models').Course;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema; //db communication, add schema
+const Course = require("./models").Course;
+const User = require("./models").User;
 const auth = require("basic-auth");
 const bcrypt = require("bcryptjs");
 
@@ -41,29 +43,28 @@ router.get("/api/users", (req, res, next) => {
 router.post("/api/users", (req, res, next) => {
   if(req.body.password) {
     const salty = bcrypt.genSaltSync(10);
-    const hashPass = bcrypt.hashSync(req.body.password, salt);
+    const hashPass = bcrypt.hashSync(req.body.password, salty);
     req.body.password = hashPass;
   }
   else {
     res.status(400);
     return next(new Error("Please Enter password."));
   }
-
-  const eRegex = /^[^@]+@[^@.]+\.[a-z]+$/i;
   // if entered email address !match eRegex, throw error
+  const eRegex = /^[^@]+@[^@.]+\.[a-z]+$/i;
   if(!eRegex.test(String(req.body.emailAddress).toLowerCase())) {
     return next(new Error("Enter valid email address"));
   }
 
   User.countDocuments({emailAddress: req.body.emailAddress}, (err, count) => {
-    if(count > 0) return next(new Error("Email address is already being used"));
-    User.create(req.body).then((data) => {
-      res.status(201).location("/").end();
-    })
-    .catch(err => {
-      res.status(400).json({error: err});
-    })
-  })
+   if(count > 0) return next(new Error("Email address is already being used"));
+   User.create(req.body).then((data) => {
+     res.status(201).location("/").end();
+   })
+   .catch((err) => {
+     res.status(400).json({error: err});
+   })
+ });
 }); //end post
 
 // Show courses
