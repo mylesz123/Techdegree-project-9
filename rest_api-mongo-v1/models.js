@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+const {Schema} = mongoose;
 
 /*COURSE*/
 const CourseSchema = new Schema({ //_id: { type: ObjectId },
@@ -35,4 +35,4 @@ UserSchema.pre('save', function(next){
 const Course = mongoose.model('Course', CourseSchema);
 const User = mongoose.model('User', UserSchema);
 
-module.exports.User = {User, Course};
+module.exports = {User, Course};
