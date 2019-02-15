@@ -1,23 +1,22 @@
 'use strict';
 
 const mongoose = require('mongoose');
-
-const {Schema} = mongoose;
+const Schema = mongoose.Schema;
 
 /*COURSE*/
 const CourseSchema = new Schema({ //_id: { type: ObjectId },
-  user : { type: String, default: 'Fred'},
-  title : { type: String, default: 'PHP Basics' },
-  description : { type: String, default: 'PHP for Newbies'},
+  user : { type: Schema.Types.ObjectId, ref: 'User'},
+  title : { type: String, required: [true, "Title is required."]},
+  description : { type: String, required: [true, "Description is required."]},
   estimatedTime : { type: String, default: '19 hours' },
   materials : { type: String, default: 'Your Brain!' },
 })
 /*USER*/
 const UserSchema = new Schema({
-  firstName : { type: String, default: 'Tattle tale'},
-  lastName : { type: String, default: 'Strangler' },
-  emailAddress : { type: String, default: 'strangle@gmail.com'},
-  password : { type: String, default: 'butter' }
+  firstName : { type: String, required: [true, "First name is required."]},
+  lastName : { type: String, required: [true, "Last name is required."]},
+  emailAddress : { type: String, required: [true, "Email address is required."]},
+  password : { type: String, required: [true, "Password is required."] }
 });
 
 /* const sortCourse = function (a, b) { //order by time
