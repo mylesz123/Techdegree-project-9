@@ -1,7 +1,7 @@
 # Techdegree-project-9
 REST api
 
-belonging to myles young, Install Node modules and get the database setup
+myles, Install Node modules and get the database setup
 Open a Command Prompt (on Windows) or Terminal (on Mac OS X and Linux) instance and browse to the root project folder.
 Run the command npm install to install the required dependencies.
 Run the command npm run seed to create your application's database and populate it with data.
